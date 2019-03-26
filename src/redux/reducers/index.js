@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux'
 import {uploadReducer} from './upload'
-import {libraryReducer} from './library'
+import {libraryReducer, libraryListReducer} from './library'
 
 export const rootReducer = combineReducers({
   upload: uploadReducer,
-  library: libraryReducer
+  library: libraryReducer,
+  libraryList: libraryListReducer
 })

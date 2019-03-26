@@ -1,4 +1,0 @@
-export const QUERY_DB = 'QUERY_DB'
-export const QUERY_DB_SUCCESS = 'QUERY_DB_SUCCESS'
-export const QUERY_STORE = 'QUERY_STORE'
-export const QUERY_STORE_SUCCESS = 'QUERY_STORE_SUCCESS'

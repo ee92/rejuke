@@ -8,3 +8,12 @@ export function libraryReducer(mediaFiles = {}, action) {
       return mediaFiles
   }
 }
+
+export function libraryListReducer(fileIds = [], action) {
+  switch (action.type) {
+    case GET_LIBRARY_SUCCESS:
+      return Object.keys(action.payload)
+    default:
+      return fileIds
+  }
+}
