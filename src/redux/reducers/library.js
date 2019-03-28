@@ -12,7 +12,8 @@ export function libraryReducer(mediaFiles = {}, action) {
 export function libraryListReducer(fileIds = [], action) {
   switch (action.type) {
     case GET_LIBRARY_SUCCESS:
-      return Object.keys(action.payload)
+      let files = action.payload || {}
+      return Object.keys(files)
     default:
       return fileIds
   }

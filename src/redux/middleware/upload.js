@@ -16,7 +16,11 @@ const itemsDropped = ({dispatch}) => next => action => {
   if (action.type === ITEMS_DROPPED) {
     const scanFiles = (item) => {
       if (item.isFile) {
-        item.file((file) => dispatch({type: UPLOAD, payload: file}))
+        item.file((file) => {
+          if (file.type.startsWith('audio')) {
+            dispatch({type: UPLOAD, payload: file})
+          }
+        })
       }
       if (item.isDirectory) {
         let reader = item.createReader()
@@ -36,6 +40,7 @@ const itemsDropped = ({dispatch}) => next => action => {
     }
   }
 }
+
 const upload = ({dispatch}) => next => action => {
   next(action)
   if (action.type === UPLOAD) {
@@ -47,6 +52,7 @@ const upload = ({dispatch}) => next => action => {
     .catch((err) => dispatch({type: UPLOAD_FAIL, payload: err}))
   }
 }
+
 const geturl = ({dispatch}) => next => action => {
   next(action)
   if (action.type === UPLOAD_SUCCESS) {
@@ -58,6 +64,7 @@ const geturl = ({dispatch}) => next => action => {
     .catch((err) => dispatch({type: UPDATE_URL_FAIL, payload: action.payload, ref: action.ref}))
   }
 }
+
 const record = ({dispatch}) => next => action => {
   next(action)
   if (action.type === UPDATE_URL_SUCCESS) {

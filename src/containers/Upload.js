@@ -13,16 +13,9 @@ class UploadContainer extends React.Component {
     return (
       <UploadView
         handleFileUpload={this.handleFileUpload}
-        items={this.props.uploadList}
       />
     )
   }
 }
 
-const mapState = state => ({
-  uploadList: state.uploadList
-})
-
-export default connect(mapState, {
-  itemsDropped
-})(UploadContainer)
+export default connect(null, {itemsDropped})(UploadContainer)
