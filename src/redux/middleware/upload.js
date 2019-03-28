@@ -1,5 +1,5 @@
 import {
-  SELECT_FILE,
+  ITEMS_DROPPED,
   UPLOAD,
   UPLOAD_SUCCESS,
   UPLOAD_FAIL,
@@ -10,10 +10,30 @@ import {
 } from '../actions/upload'
 import { db, storage } from '../../firebase'
 
-const selectFile = ({dispatch}) => next => action => {
+
+const itemsDropped = ({dispatch}) => next => action => {
   next(action)
-  if (action.type === SELECT_FILE) {
-    dispatch({type: UPLOAD, payload: action.payload})
+  if (action.type === ITEMS_DROPPED) {
+    const scanFiles = (item) => {
+      if (item.isFile) {
+        item.file((file) => dispatch({type: UPLOAD, payload: file}))
+      }
+      if (item.isDirectory) {
+        let reader = item.createReader()
+        reader.readEntries((entries) => {
+          entries.forEach((entry) => {
+            scanFiles(entry)
+          })
+        })
+      }
+    }
+    let items = action.payload
+    for (let i=0; i<items.length; i++) {
+      let item = items[i].webkitGetAsEntry()
+      if (item) {
+        scanFiles(item)
+      }
+    }
   }
 }
 const upload = ({dispatch}) => next => action => {
@@ -52,4 +72,4 @@ const record = ({dispatch}) => next => action => {
   }
 }
 
-export default [selectFile, upload, geturl, record]
+export default [itemsDropped, upload, geturl, record]

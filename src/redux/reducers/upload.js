@@ -1,10 +1,11 @@
-import { SELECT_FILE } from '../actions/upload'
+import { RECORD_UPLOAD_SUCCESS } from '../actions/upload'
 
-export function uploadReducer(upload = {}, action) {
+export function uploadReducer(uploadList = [], action) {
   switch (action.type) {
-    case SELECT_FILE:
-      return action.payload
+    case RECORD_UPLOAD_SUCCESS:
+      return [...uploadList, action.payload]
     default:
-      return upload
+      return uploadList
   }
+  return uploadList
 }
