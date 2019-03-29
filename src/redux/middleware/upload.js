@@ -22,6 +22,8 @@ const itemsDropped = ({dispatch}) => next => action => {
           }
         })
       }
+      arr.push(item)
+
       if (item.isDirectory) {
         let reader = item.createReader()
         reader.readEntries((entries) => {
